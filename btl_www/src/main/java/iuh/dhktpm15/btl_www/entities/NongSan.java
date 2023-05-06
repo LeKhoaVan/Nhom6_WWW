@@ -2,111 +2,34 @@ package iuh.dhktpm15.btl_www.entities;
 
 import jakarta.persistence.*;
 
-import java.util.Objects;
-import java.util.Set;
+import java.util.List;
 
 @Entity
-@Table(name = "nong-san")
+@Table(name="NongSan")
 public class NongSan {
     @Id
     @Column(name = "id")
     private String id;
 
-    @Column(name = "ten")
-    private String ten;
+    @Column(name = "tenNongSan")
+    private String tenNongSan;
 
-    @Column(name = "dk-bao-quan")
-    private String dkBaoQuan ;
+    @Column(name = "hinhAnh")
+    private String hinhAnh;
 
-    @Column(name = "gia")
-    private double gia;
+    @Column(name = "dkBaoQuan")
+    private String dkBaoQuan;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id-loai")
+    @Column(name = "moTa")
+    private String moTa;
+
+    @ManyToOne
+    @JoinColumn(name = "idLoai")
     private Loai loai;
 
+    @OneToMany(mappedBy = "nongSan", cascade = CascadeType.ALL)
+    private List<CT_DonNhap> ctDonNhaps;
+
     @OneToMany(mappedBy = "nongSan")
-    private Set<CT_HoaDon> ct_hoaDonSet;
-
-    public NongSan() {
-    }
-
-    public NongSan(String ten, String dkBaoQuan, double gia, Loai loai, Set<CT_HoaDon> ct_hoaDonSet) {
-        int startId = 100;
-        this.id = "NS"+String.format("%05d"+startId++);
-        this.ten = ten;
-        this.dkBaoQuan = dkBaoQuan;
-        this.gia = gia;
-        this.loai = loai;
-        this.ct_hoaDonSet = ct_hoaDonSet;
-    }
-
-    public void setTen(String ten) {
-        this.ten = ten;
-    }
-
-    public void setDkBaoQuan(String dkBaoQuan) {
-        this.dkBaoQuan = dkBaoQuan;
-    }
-
-    public void setGia(double gia) {
-        this.gia = gia;
-    }
-
-    public void setLoai(Loai loai) {
-        this.loai = loai;
-    }
-
-    public void setCt_hoaDonSet(Set<CT_HoaDon> ct_hoaDonSet) {
-        this.ct_hoaDonSet = ct_hoaDonSet;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getTen() {
-        return ten;
-    }
-
-    public String getDkBaoQuan() {
-        return dkBaoQuan;
-    }
-
-    public double getGia() {
-        return gia;
-    }
-
-    public Loai getLoai() {
-        return loai;
-    }
-
-    public Set<CT_HoaDon> getCt_hoaDonSet() {
-        return ct_hoaDonSet;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        NongSan nongSan = (NongSan) o;
-        return Objects.equals(id, nongSan.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return "NongSan{" +
-                "id='" + id + '\'' +
-                ", ten='" + ten + '\'' +
-                ", dkBaoQuan='" + dkBaoQuan + '\'' +
-                ", gia=" + gia +
-                ", loai=" + loai +
-                ", ct_hoaDonSet=" + ct_hoaDonSet +
-                '}';
-    }
+    private List<CT_DonBan> ctDonBans;
 }
